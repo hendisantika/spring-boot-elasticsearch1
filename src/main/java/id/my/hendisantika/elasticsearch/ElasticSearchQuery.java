@@ -1,8 +1,10 @@
 package id.my.hendisantika.elasticsearch;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.io.IOException;
  * Time: 10.26
  * To change this template use File | Settings | File Templates.
  */
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ElasticSearchQuery {
@@ -37,5 +40,23 @@ public class ElasticSearchQuery {
             return "Document has been successfully updated.";
         }
         return "Error while performing the operation.";
+    }
+
+    public Product getDocumentById(String productId) throws IOException {
+        Product product = null;
+        GetResponse<Product> response = elasticsearchClient.get(g -> g
+                        .index(indexName)
+                        .id(productId),
+                Product.class
+        );
+
+        if (response.found()) {
+            product = response.source();
+            log.info("Product name {}", product.getName());
+        } else {
+            log.info("Product not found");
+        }
+
+        return product;
     }
 }
