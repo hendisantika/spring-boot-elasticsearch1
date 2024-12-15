@@ -46,4 +46,12 @@ public class UIController {
         model.addAttribute("product", product);
         return "updateProductDocument";
     }
+
+    @GetMapping("/showNewProductForm")
+    public String showNewEmployeeForm(Model model) {
+        // create model attribute to bind form data
+        Product product = new Product();
+        model.addAttribute("product", product);
+        return "newProductDocument";
+    }
 }
