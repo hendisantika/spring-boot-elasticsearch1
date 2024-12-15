@@ -1,4 +1,4 @@
-package id.my.hendisantika.elasticsearch;
+package id.my.hendisantika.elasticsearch.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

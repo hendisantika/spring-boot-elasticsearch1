@@ -1,4 +1,4 @@
-package id.my.hendisantika.elasticsearch;
+package id.my.hendisantika.elasticsearch.config;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;

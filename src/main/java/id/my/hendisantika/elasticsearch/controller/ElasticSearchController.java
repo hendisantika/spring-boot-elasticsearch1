@@ -1,7 +1,7 @@
 package id.my.hendisantika.elasticsearch.controller;
 
-import id.my.hendisantika.elasticsearch.ElasticSearchQuery;
-import id.my.hendisantika.elasticsearch.Product;
+import id.my.hendisantika.elasticsearch.entity.Product;
+import id.my.hendisantika.elasticsearch.service.ElasticSearchQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
