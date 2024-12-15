@@ -5,6 +5,7 @@ import id.my.hendisantika.elasticsearch.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,4 +42,11 @@ public class ElasticSearchController {
         Product product = elasticSearchQuery.getDocumentById(productId);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteDocument")
+    public ResponseEntity<Object> deleteDocumentById(@RequestParam String productId) throws IOException {
+        String response = elasticSearchQuery.deleteDocumentById(productId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
