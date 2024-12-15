@@ -1,6 +1,8 @@
 package id.my.hendisantika.elasticsearch;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.DeleteRequest;
+import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Created by IntelliJ IDEA.
@@ -58,5 +61,17 @@ public class ElasticSearchQuery {
         }
 
         return product;
+    }
+
+    public String deleteDocumentById(String productId) throws IOException {
+        DeleteRequest request = DeleteRequest.of(d -> d.index(indexName).id(productId));
+
+        DeleteResponse deleteResponse = elasticsearchClient.delete(request);
+        if (Objects.nonNull(deleteResponse.result()) && !deleteResponse.result().name().equals("NotFound")) {
+            return "Product with id " + deleteResponse.id() + " has been deleted.";
+        }
+        log.info("Product not found");
+        return "Product with id " + deleteResponse.id() + " does not exist.";
+
     }
 }
