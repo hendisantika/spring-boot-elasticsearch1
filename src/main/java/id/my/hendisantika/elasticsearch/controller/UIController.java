@@ -54,4 +54,10 @@ public class UIController {
         model.addAttribute("product", product);
         return "newProductDocument";
     }
+
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable(value = "id") String id) throws IOException {
+        this.elasticSearchQuery.deleteDocumentById(id);
+        return "redirect:/";
+    }
 }
