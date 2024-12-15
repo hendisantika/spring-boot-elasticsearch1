@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,4 +50,9 @@ public class ElasticSearchController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/searchDocument")
+    public ResponseEntity<Object> searchAllDocument() throws IOException {
+        List<Product> products = elasticSearchQuery.searchAllDocuments();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 }
