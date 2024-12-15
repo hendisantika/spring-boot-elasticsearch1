@@ -1,10 +1,13 @@
 package id.my.hendisantika.elasticsearch.controller;
 
 import id.my.hendisantika.elasticsearch.ElasticSearchQuery;
+import id.my.hendisantika.elasticsearch.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 
@@ -28,5 +31,11 @@ public class UIController {
     public String viewHomePage(Model model) throws IOException {
         model.addAttribute("listProductDocuments", elasticSearchQuery.searchAllDocuments());
         return "index";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute("product") Product product) throws IOException {
+        elasticSearchQuery.createOrUpdateDocument(product);
+        return "redirect:/";
     }
 }
