@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
@@ -37,5 +38,12 @@ public class UIController {
     public String saveProduct(@ModelAttribute("product") Product product) throws IOException {
         elasticSearchQuery.createOrUpdateDocument(product);
         return "redirect:/";
+    }
+
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable(value = "id") String id, Model model) throws IOException {
+        Product product = elasticSearchQuery.getDocumentById(id);
+        model.addAttribute("product", product);
+        return "updateProductDocument";
     }
 }
