@@ -1,3 +1,10 @@
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: mhsj6S4eCTzb7lvlnISbCrKn
+    repositories:
+      enabled: true
 springdoc:
   version: 1.0.0
   swagger-ui:
