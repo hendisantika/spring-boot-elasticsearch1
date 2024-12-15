@@ -5,11 +5,16 @@ import co.elastic.clients.elasticsearch.core.DeleteRequest;
 import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -72,6 +77,18 @@ public class ElasticSearchQuery {
         }
         log.info("Product not found");
         return "Product with id " + deleteResponse.id() + " does not exist.";
+    }
 
+    public List<Product> searchAllDocuments() throws IOException {
+        SearchRequest searchRequest = SearchRequest.of(s -> s.index(indexName));
+        SearchResponse searchResponse = elasticsearchClient.search(searchRequest, Product.class);
+        List<Hit> hits = searchResponse.hits().hits();
+        List<Product> products = new ArrayList<>();
+        for (Hit object : hits) {
+            log.info(String.valueOf(object.source()));
+            products.add((Product) object.source());
+
+        }
+        return products;
     }
 }
